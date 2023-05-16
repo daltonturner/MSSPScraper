@@ -24,7 +24,7 @@ jobs:
         pip install -r requirements.txt
 
     - name: Run ytscraper.py
-      run: python3 ytscraper.py
+      run: YOUTUBE_API_KEY=${{ secrets.YOUTUBE_API_KEY }} python3 ytscraper.py
 
     - name: Commit and push if it changed
       run: |
