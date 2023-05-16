@@ -1,0 +1,34 @@
+name: Run Scraper
+
+on:
+  schedule:
+    - cron:  '0 15 * * 3'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        python3 -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run ytscraper.py
+      run: python3 ytscraper.py
+
+    - name: Commit and push if it changed
+      run: |
+        git diff
+        git config --global user.email "turnerdalton055@gmail.com"
+        git config --global user.name "daltonturner"
+        git commit -am "Update video data" || exit 0
+        git push
