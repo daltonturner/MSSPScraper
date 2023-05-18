@@ -12,6 +12,8 @@ jobs:
     steps:
     - name: Check out code
       uses: actions/checkout@v2
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Set up Python
       uses: actions/setup-python@v2
@@ -37,5 +39,5 @@ jobs:
         git add -A
         timestamp=$(date -u)
         git commit -m "Automated update on ${timestamp}" || exit 0
-        git push https://${{ secrets.GITHUB_TOKEN }}@github.com/daltonturner/MSSPScraper.git
+        git push https://github.com/daltonturner/MSSPScraper
 
