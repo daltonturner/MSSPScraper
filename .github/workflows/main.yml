@@ -3,7 +3,7 @@ name: Run Scraper
 on:
   workflow_dispatch:
   schedule:
-    - cron:  '0 15 * * 3'
+    - cron:  '0 20 * * 3'
 
 jobs:
   build:
