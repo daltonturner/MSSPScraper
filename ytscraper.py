@@ -36,25 +36,11 @@ def fetch_video_details(api_key, channel_id, uploads_id, data_filename):
 
         time.sleep(1)  # To respect the YouTube API rate limit
 
-    # Load the old video data, if it exists
-    if os.path.exists(data_filename):
-        with open(data_filename, 'r') as f:
-            old_video_data = json.load(f)
-    else:
-        old_video_data = []
-
-    # Get the old video IDs
-    old_video_ids = [video['id'] for video in old_video_data]
-
-    # Get the details for each new video
-    video_details = old_video_data.copy()
+    # Get the details for each video
+    video_details = []
     base_url = 'https://www.googleapis.com/youtube/v3/videos?'
 
     for video_id in video_links:
-        # Skip if we already have data for this video
-        if video_id in old_video_ids:
-            continue
-
         video_url = f'{base_url}part=snippet,statistics,contentDetails&id={video_id}&key={api_key}'
         response = requests.get(video_url).json()
         video_details.append(response['items'][0])
