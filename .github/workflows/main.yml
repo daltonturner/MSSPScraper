@@ -47,6 +47,6 @@ jobs:
       run: |-
         datasette publish vercel video_data.db \
           --token $VERCEL_TOKEN \
-          --project mssp-scraper
+          --project mssp-scraper \
           --metadata metadata.json
 
