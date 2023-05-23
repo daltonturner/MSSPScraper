@@ -1,5 +1,5 @@
 # MSSPScraper
-[![Run Scraper](https://github.com/daltonturner/MSSPScraper/actions/workflows/main.yml/badge.svg)](https://github.com/daltonturner/MSSPScraper/actions/workflows/main.yml)
+[![Run Scraper](https://github.com/daltonturner/MSSPScraper/actions/workflows/main.yml/badge.svg)](https://github.com/daltonturner/MSSPScraper/actions/workflows/main.yml) [![Extract Transcripts](https://github.com/daltonturner/MSSPScraper/actions/workflows/extract_transcripts.yml/badge.svg)](https://github.com/daltonturner/MSSPScraper/actions/workflows/extract_transcripts.yml)
 
 Uses the YouTube API to scrape video data from Matt And Shane's Secret Podcast YouTube uploads.
 
