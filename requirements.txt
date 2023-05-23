@@ -64,3 +64,4 @@ urllib3==2.0.2
 uvicorn==0.22.0
 virtualenv==20.4.7
 wcwidth==0.2.5
+youtube-transcript-api==0.6.0
