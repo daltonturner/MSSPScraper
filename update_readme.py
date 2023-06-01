@@ -18,8 +18,8 @@ def inject_image_link(md_file_path):
     with open(md_file_path, 'r') as file:
         original_content = file.read()
 
-    # Add the image link to the bottom of the markdown file
-    new_content = original_content + "\n" + image_html
+    # Use a regex to replace the existing image link with the new one
+    new_content = re.sub(r'<p align="center"><img .*></p>\n', image_html, original_content)
 
     # Write the new content back to the markdown file
     with open(md_file_path, 'w') as file:
@@ -28,3 +28,4 @@ def inject_image_link(md_file_path):
 if __name__ == "__main__":
     # Example usage
     inject_image_link('README.md')
+
