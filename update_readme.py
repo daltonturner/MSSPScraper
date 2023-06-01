@@ -1,5 +1,6 @@
-import requests
 import json
+import re
+import requests
 
 def inject_image_link(md_file_path):
     # Make a GET request to the Deployed Datasette URL
