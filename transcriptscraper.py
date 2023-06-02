@@ -11,8 +11,17 @@ json_path = "video_transcripts.json"
 
 def fetch_video_details():
 
-    # Fetch video IDs from Datasette
-    response = requests.get('https://mssp-scraper.vercel.app/video_data.json?sql=select%20id%20from%20videos')
+    # Fetch video IDs from Datasette where transcript is None and the most recent video ID
+    url = (
+        'https://mssp-scraper.vercel.app/video_data.json?sql=with%20most_recent_video%20as%20('
+        '%0D%0A%20%20select%0D%0A%20%20%20%20id%0D%0A%20%20from%0D%0A%20%20%20%20videos%0D%0A'
+        '%20%20order%20by%0D%0A%20%20%20%20snippet_publishedAt%20desc%0D%0A%20%20limit%0D%0A'
+        '%20%20%20%201%0D%0A)%2C%20missing_transcripts%20as%20(%0D%0A%20%20select%0D%0A%20%20%20'
+        '%20id%0D%0A%20%20from%0D%0A%20%20%20%20transcripts%0D%0A%20%20where%0D%0A%20%20%20%20'
+        'transcript%20is%20null%0D%0A)%0D%0Aselect%0D%0A%20%20*%0D%0Afrom%0D%0A%20%20most_recent_video'
+        '%0D%0Aunion%0D%0Aselect%0D%0A%20%20*%0D%0Afrom%0D%0A%20%20missing_transcripts'
+    )
+    response = requests.get(url)
     video_ids = [item[0] for item in response.json()['rows']]
 
     # List to hold video transcript data
