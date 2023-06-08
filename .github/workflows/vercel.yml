@@ -30,4 +30,5 @@ jobs:
         datasette publish vercel video_data.db \
           --token $VERCEL_TOKEN \
           --project mssp-scraper \
+          --install datasette-chatgpt-plugin \
           --metadata metadata.json
