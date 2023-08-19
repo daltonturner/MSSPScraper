@@ -3,7 +3,7 @@ name: Extract Transcripts
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ["Run Scraper"]
+    workflows: ["Update README"]
     types: 
       - completed
 
@@ -46,7 +46,6 @@ jobs:
         git diff
         git config --global user.email "actions@github.com"
         git config --global user.name "GitHub Action"
-        git pull origin main --rebase
         git add -A
         timestamp=$(date -u)
         git commit -m "Automated update on ${timestamp}" || exit 0
