@@ -22,7 +22,9 @@ class YouTubeScraper:
             try:
                 resp = requests.get(url).json()
                 for item in resp['items']:
-                    self.video_links.append(item['contentDetails']['videoId'])
+                    video_id = item['contentDetails']['videoId']
+                    video_url = f'https://www.youtube.com/watch?v={video_id}'
+                    self.video_links.append({'id': video_id, 'url': video_url})
 
                 next_page_token = resp.get('nextPageToken')
                 if next_page_token:
@@ -37,7 +39,8 @@ class YouTubeScraper:
 
     def fetch_video_details(self):
         base_url = 'https://www.googleapis.com/youtube/v3/videos?'
-        for video_id in self.video_links:
+        for video in self.video_links:
+            video_id = video['id']  # Get the video ID from the dictionary
             try:
                 video_url = f'{base_url}part=snippet,statistics,contentDetails&id={video_id}&key={self.api_key}'
                 response = requests.get(video_url).json()
@@ -47,9 +50,9 @@ class YouTubeScraper:
             except Exception as e:
                 print(f"An error occurred: {e}")
 
-    def save_data_to_file(self):
-        with open(self.data_filename, 'w') as f:
-            json.dump(self.video_details, f)
+    def save_to_file(self, data, filename):
+        with open(filename, 'w') as f:
+            json.dump(data, f)
 
 if __name__ == "__main__":
     api_key = os.environ["YOUTUBE_API_KEY"]
@@ -59,9 +62,12 @@ if __name__ == "__main__":
 
     scraper = YouTubeScraper(api_key, channel_id, uploads_id, data_filename)
     scraper.fetch_video_links()
+    scraper.save_to_file(scraper.video_links, 'video_links.json')
     scraper.fetch_video_details()
-    scraper.save_data_to_file()
+    scraper.save_to_file(scraper.video_details, 'video_data.json')
 
     # Now use subprocess to call sqlite-utils
-    command = ['sqlite-utils', 'upsert', 'video_data.db', 'videos', data_filename, '--pk=id', '--flatten', '--alter']
+    command = ['sqlite-utils', 'upsert', 'video_data.db', 'videos', 'video_data.json', '--pk=id', '--flatten', '--alter']
+    subprocess.run(command, check=True)
+    command = ['sqlite-utils', 'upsert', 'video_data.db', 'video_links', 'video_links.json', '--pk=id', '--flatten', '--alter']
     subprocess.run(command, check=True)
