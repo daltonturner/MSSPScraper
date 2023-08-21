@@ -1,6 +1,36 @@
 {
     "title": "MSSPScraper",
-    "description": "Matt & Shane's Secret Podcast YouTube data set.",
+    "description": "A comprehensive data set of Matt & Shane's Secret Podcast YouTube channel, scraped using YouTube API.",
     "source": "YouTube",
-    "source_url": "https://youtube.com"
+    "source_url": "https://youtube.com",
+    "databases": {
+        "video_data": {
+            "tables": {
+                "transcripts": {
+                    "description": "This table contains the transcripts of each video from Matt & Shane's Secret Podcast. Each row represents a unique video transcript, with columns for video ID, timestamp, and the transcript text.",
+                    "primary_key": "video_id"
+                },
+                "video_links": {
+                    "description": "This table contains the direct links to each video from Matt & Shane's Secret Podcast. Each row represents a unique video, with columns for video ID and the URL.",
+                    "primary_key": "video_id"
+                },
+                "video_data": {
+                    "description": "This table contains metadata related to each video from Matt & Shane's Secret Podcast. Each row represents a unique video, with columns for video ID, title, description, duration, views, likes, dislikes, and comments.",
+                    "primary_key": "video_id",
+                    "hidden": true,
+                    "sort_desc": "snippet_publishedAt"
+                }
+            },
+            "queries": {
+                "transcripts": {
+                    "sql": "select t.video_id, vd.snippet_title, t.transcript\n from transcripts as t\n left join video_data as vd on vd.video_id = t.video_id",
+                    "title": "Transcripts"
+                },
+                "video_links": {
+                    "sql": "select vl.video_id, vd.snippet_title, vl.url\n from video_links as vl\n join video_data as vd on vd.video_id = vl.video_id",
+                    "title": "Video Links"
+                }
+            }
+        }
+    }
 }
