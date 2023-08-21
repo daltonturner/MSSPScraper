@@ -38,8 +38,8 @@ jobs:
     - name: Install sqlite-utils globally
       run: pip install sqlite-utils
 
-    - name: Run transcriptscraper.py
-      run: python3 transcriptscraper.py
+    - name: Run transcript_scraper.py
+      run: python3 transcript_scraper.py
 
     - name: Commit and push if it changed
       run: |

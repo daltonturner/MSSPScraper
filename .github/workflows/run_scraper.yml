@@ -13,7 +13,7 @@ jobs:
     - name: Check out code
       uses: actions/checkout@v2
       with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Set up Python
       uses: actions/setup-python@v2
@@ -36,8 +36,8 @@ jobs:
     - name: Install sqlite-utils globally
       run: pip install sqlite-utils
 
-    - name: Run ytscraper.py
-      run: YOUTUBE_API_KEY=${{ secrets.YOUTUBE_API_KEY }} python3 YouTubeScraper.py
+    - name: Run youtube_scraper.py
+      run: YOUTUBE_API_KEY=${{ secrets.YOUTUBE_API_KEY }} python3 youtube_scraper.py
 
     - name: Commit and push if it changed
       run: |
