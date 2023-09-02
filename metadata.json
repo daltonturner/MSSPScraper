@@ -25,10 +25,6 @@
                 "transcripts": {
                     "sql": "select t.id, vd.snippet_title, t.transcript\n from transcripts as t\n left join videos as vd on vd.id = t.id",
                     "title": "Transcripts"
-                },
-                "video_links": {
-                    "sql": "select vl.id, vd.snippet_title, vl.url\n from video_links as vl\n join videos as vd on vd.id = vl.id",
-                    "title": "Video Links"
                 }
             }
         }
