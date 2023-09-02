@@ -3,4 +3,4 @@
 
 Uses the YouTube API to scrape video data from Matt And Shane's Secret Podcast YouTube uploads.
 
-<p align="center"><img src="https://i.ytimg.com/vi/3Z6U-LBZKw4/maxresdefault.jpg" alt="Most recent thumbnail" max-width="500px" max-height="500px"></p>
+<p align="center"><img src="https://i.ytimg.com/vi/xZm06tf-CZs/maxresdefault.jpg" alt="Most recent thumbnail" max-width="500px" max-height="500px"></p>
