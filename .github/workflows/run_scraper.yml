@@ -33,9 +33,6 @@ jobs:
         python3 -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Install sqlite-utils globally
-      run: pip install sqlite-utils
-
     - name: Run youtube_scraper.py
       run: YOUTUBE_API_KEY=${{ secrets.YOUTUBE_API_KEY }} python3 youtube_scraper.py
 
