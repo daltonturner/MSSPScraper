@@ -2,7 +2,6 @@ import requests
 import time
 import json
 import os
-import subprocess
 from sqlite_utils import Database
 
 class YouTubeScraper:
@@ -67,14 +66,11 @@ if __name__ == "__main__":
     scraper.fetch_video_details()
     scraper.save_to_file(scraper.video_details, 'video_data.json')
 
-    # Now use subprocess to call sqlite-utils
-    command = ['sqlite-utils', 'upsert', 'video_data.db', 'videos', 'video_data.json', '--pk=id', '--flatten', '--alter']
-    subprocess.run(command, check=True)
-    command = ['sqlite-utils', 'upsert', 'video_data.db', 'video_links', 'video_links.json', '--pk=id', '--flatten', '--alter']
-    subprocess.run(command, check=True)
-
-    # Create a new table that combines data from video_links and video_details
     db = Database("video_data.db")
+    db["videos"].upsert_all(scraper.video_details, pk="id", alter=True)
+    db["video_links"].upsert_all(scraper.video_links, pk="id", alter=True)
+
+    db.execute("DROP TABLE IF EXISTS summarized_data")
     db.execute("""
         CREATE TABLE summarized_data AS
         SELECT v.id, 
