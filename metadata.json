@@ -6,6 +6,11 @@
     "databases": {
         "video_data": {
             "tables": {
+                "summarized_data": {
+                    "description": "This table contains metadata related to each video from Matt & Shane's Secret Podcast. Each row represents a unique video, with columns for video ID, title, description, duration, views, likes, dislikes, and comments.",
+                    "primary_key": "id",
+                    "sort_desc": "snippet_publishedAt"
+                },
                 "transcripts": {
                     "description": "This table contains the transcripts of each video from Matt & Shane's Secret Podcast. Each row represents a unique video transcript, with columns for video ID, timestamp, and the transcript text.",
                     "primary_key": "id"
@@ -15,18 +20,10 @@
                     "primary_key": "id"
                 },
                 "videos": {
-                    "description": "This table contains metadata related to each video from Matt & Shane's Secret Podcast. Each row represents a unique video, with columns for video ID, title, description, duration, views, likes, dislikes, and comments.",
-                    "primary_key": "id",
-                    "hidden": true,
-                    "sort_desc": "snippet_publishedAt"
+                    "hidden": true
                 }
             },
-            "queries": {
-                "transcripts": {
-                    "sql": "select t.id, vd.snippet_title, t.transcript\n from transcripts as t\n left join videos as vd on vd.id = t.id",
-                    "title": "Transcripts"
-                }
-            }
+            "queries": { }
         }
     }
 }
