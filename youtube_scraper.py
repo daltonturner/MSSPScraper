@@ -3,6 +3,7 @@ import time
 import json
 import os
 import subprocess
+from sqlite_utils import Database
 
 class YouTubeScraper:
     def __init__(self, api_key, channel_id, uploads_id, data_filename):
@@ -71,3 +72,21 @@ if __name__ == "__main__":
     subprocess.run(command, check=True)
     command = ['sqlite-utils', 'upsert', 'video_data.db', 'video_links', 'video_links.json', '--pk=id', '--flatten', '--alter']
     subprocess.run(command, check=True)
+
+    # Create a new table that combines data from video_links and video_details
+    db = Database("video_data.db")
+    db.execute("""
+        CREATE TABLE summarized_data AS
+        SELECT v.id, 
+        v.snippet_title, 
+        v.snippet_publishedAt, 
+        v.snippet_description, 
+        v.snippet_thumbnails_maxres_url, 
+        v.statistics_viewCount,
+        v.statistics_likeCount,
+        v.statistics_commentCount,
+        v.contentDetails_regionRestriction_blocked,
+        vl.url
+        FROM videos AS v 
+        JOIN video_links AS vl ON v.id = vl.id
+    """)
